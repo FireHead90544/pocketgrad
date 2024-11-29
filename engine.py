@@ -13,6 +13,24 @@ class Tensor:
         self._dependencies = set(_children)
         self._op = _op
 
+    def backward(self) -> None:
+        topo: List[Tensor] = []
+        visited: Set[Tensor] = set()
+
+        def _build_topo(node: Tensor) -> None:
+            if node not in visited:
+                visited.add(node)
+                for child in node._dependencies:
+                    _build_topo(child)
+
+                topo.append(node)
+
+        _build_topo(self)
+
+        self.grad = 1.0
+        for node in reversed(topo):
+            node._backward()
+
     def __add__(self, other: Union[int, float, Tensor]) -> Tensor: # self + other
         if not isinstance(other, (int, float, Tensor)):
             raise TypeError(f"Unsupported operand type(s) for +: 'Tensor' and '{type(other).__name__}'")
