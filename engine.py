@@ -13,6 +13,27 @@ class Tensor:
         self._dependencies = set(_children)
         self._op = _op
 
+    def __add__(self, other: Union[int, float, Tensor]) -> Tensor: # self + other
+        if not isinstance(other, (int, float, Tensor)):
+            raise TypeError(f"Unsupported operand type(s) for +: 'Tensor' and '{type(other).__name__}'")
+
+        other = other if isinstance(other, Tensor) else Tensor(other)
+        out = Tensor(self.data + other.data, (self, other), '+')
+
+        def _backward() -> None:
+            self.grad += out.grad
+            other.grad += out.grad
+
+        out._backward = _backward
+
+        return out
+
+    def __radd__(self, other: Union[int, float, Tensor]) -> Tensor: # other + self
+        if not isinstance(other, (int, float, Tensor)):
+            raise TypeError(f"Unsupported operand type(s) for +: '{type(other).__name__}' and 'Tensor'")
+
+        return self + other
+
     def __repr__(self) -> str:
         return f"Tensor(data={self.data}, grad={self.grad})"
 
