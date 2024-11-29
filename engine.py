@@ -70,6 +70,19 @@ class Tensor:
 
         return other + (-self)
 
+    def __pow__(self, other: Union[int, float]) -> Tensor: # self ** other
+        if not isinstance(other, (int, float)):
+            raise TypeError(f"Unsupported operand type(s) for **: 'Tensor' and '{type(other).__name__}'")
+
+        out = Tensor(self.data ** other, (self,), f'**{other}')
+
+        def _backward():
+            self.grad += other * (self.data ** (other - 1)) * out.grad
+
+        out._backward = _backward
+
+        return out
+
     def __repr__(self) -> str:
         return f"Tensor(data={self.data}, grad={self.grad})"
 
