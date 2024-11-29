@@ -55,6 +55,9 @@ class Tensor:
 
         return self * other
 
+    def __neg__(self) -> Tensor: # -self
+        return self * -1
+
     def __repr__(self) -> str:
         return f"Tensor(data={self.data}, grad={self.grad})"
 
