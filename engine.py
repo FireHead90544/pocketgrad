@@ -58,6 +58,18 @@ class Tensor:
     def __neg__(self) -> Tensor: # -self
         return self * -1
 
+    def __sub__(self, other: Union[int, float, Tensor]) -> Tensor: # self - other
+        if not isinstance(other, (int, float, Tensor)):
+            raise TypeError(f"Unsupported operand type(s) for -: 'Tensor' and '{type(other).__name__}'")
+
+        return self + (-other)
+
+    def __rsub__(self, other: Union[int, float, Tensor]) -> Tensor: # other - self
+        if not isinstance(other, (int, float, Tensor)):
+            raise TypeError(f"Unsupported operand type(s) for -: '{type(other).__name__}' and 'Tensor'")
+
+        return other + (-self)
+
     def __repr__(self) -> str:
         return f"Tensor(data={self.data}, grad={self.grad})"
 
