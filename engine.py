@@ -97,6 +97,3 @@ class Tensor:
 
     def __repr__(self) -> str:
         return f"Tensor(data={self.data}, grad={self.grad})"
-
-if __name__ == "__main__":
-    pass
