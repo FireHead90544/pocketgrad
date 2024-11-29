@@ -1,3 +1,3 @@
 # pocketgrad
 
-A smol scalar-valued autograd engine w/ no dependencies and a pytorch-like api.
+A smol scalar-valued autograd engine w/ no dependencies + a pytorch-like api, inspired by Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd/).
