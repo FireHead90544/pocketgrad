@@ -1,0 +1,7 @@
+[project]
+name = "pocketgrad"
+version = "0.1.0"
+description = "A smol scalar-valued autograd engine w/ no dependencies and a pytorch-like api."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
